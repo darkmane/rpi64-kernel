@@ -8,7 +8,7 @@ ENV LINUX=/workdir/rpi64-linux \
 
 # Install build dependencies
 RUN apt-get update && \
-  apt-get install -y bc build-essential curl git-core libncurses5-dev kmod flex bison libssl-dev
+  apt-get install -y bc build-essential curl git-core libncurses5-dev kmod flex bison libssl-dev cpio
 
 # Install crosscompile toolchain for ARM64/aarch64
 RUN mkdir -p /opt/linaro && \
