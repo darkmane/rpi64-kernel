@@ -79,7 +79,7 @@ sha256sum $TARFILE2 > $TARFILE2.sha256
 # Copy build artefacts
 cp $TARFILE1* $BUILD_DEST/
 cp $TARFILE2* $BUILD_DEST/
-cp ../*.deb $BUILD_DEST/
+cp $WORKDIR/*.deb $BUILD_DEST/
 
 # List build artefacts
 ls -al $BUILD_DEST/
