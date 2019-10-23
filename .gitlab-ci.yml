@@ -12,12 +12,20 @@ variables:
 services:
   - docker:19.03.0-dind
 
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+docker:
+  stage: build
+  script: 
+    - docker build -t registry.gitlab.com/darkmane/rpi64-kernel .
+    - docker push registry.gitlab.com/darkmane/rpi64-kernel:latest
+
 kernel:
   stage: build
   script:
     - mkdir builds
-    - docker build -t builder .
-    - docker run -e DEFCONFIG=$DEFCONFIG -e BUILD_NR=test -v $(pwd)/builds:/builds --name rpikernelbuilder builder
+    - docker run -e DEFCONFIG=$DEFCONFIG -e BUILD_NR=test -v $(pwd)/builds:/builds --name rpikernelbuilder registry.gitlab.com/darkmane/rpi64-kernel
     - docker rm rpikernelbuilder
   artifacts:
     paths:
