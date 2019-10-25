@@ -12,15 +12,21 @@ variables:
 services:
   - docker:19.03.0-dind
 
+stages:
+  - docker_build
+  - build
+
 before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 docker:
-  stage: build
+  stage: docker_build
   script: 
     - docker build -t registry.gitlab.com/darkmane/rpi64-kernel .
     - docker push registry.gitlab.com/darkmane/rpi64-kernel:latest
-
+  only:
+    changes:
+      - Dockerfile
 kernel:
   stage: build
   script:
